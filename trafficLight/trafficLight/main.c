@@ -8,11 +8,23 @@
 #include <avr/io.h>
 
 
+void setTrafficLight(){
+	// TODO: Implement (#2)
+}
+
+
+void setPedLight(){
+	// TODO: Implement (#3)
+}
+
+
+void setTrafficDir(){
+	// TODO: Implement (#4)
+}
+
+
 int main(void)
 {
-    /* Replace with your application code */
-    while (1) 
-    {
-    }
+	// TODO: Implement (#5)
 }
 
