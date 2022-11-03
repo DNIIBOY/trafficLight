@@ -5,7 +5,12 @@
  * Authors : Anders, Daniel & Oliver
  */ 
 
+
+#define F_CPU 16000000UL
+
 #include <avr/io.h>
+#include <avr/power.h>
+#include <util/delay.h>
 
 
 void setTrafficLight(){
