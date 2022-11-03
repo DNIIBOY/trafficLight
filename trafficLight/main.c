@@ -12,18 +12,20 @@
 #include <avr/power.h>
 #include <util/delay.h>
 
+#include <stdbool.h>  // Add boolean data type
 
-void setTrafficLight(){
+
+void setTrafficLight(bool northBound, bool toGreen){
 	// TODO: Implement (#2)
 }
 
 
-void setPedLight(){
+void setPedLight(bool northBound, bool toGreen){
 	// TODO: Implement (#3)
 }
 
 
-void setTrafficDir(){
+void setTrafficDir(bool northBound){
 	// TODO: Implement (#4)
 }
 
