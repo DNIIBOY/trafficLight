@@ -13,9 +13,10 @@
 #include <stdbool.h>  // Add boolean data type
 
 // Globals
-int greenTime = 10;  // How many seconds can the light stay green?
-int pedDelay = 2;  // How much earlier do the pedestrian lights turn off, than the car lights?
-int carDelay = greenTime * 0.1;  // How long are all traffic lights red, when changing from one side to another?
+#define GREENTIME 10  // How many seconds can the light stay green?
+#define pedDelay 2  // How much earlier do the pedestrian lights turn off, than the car lights?
+#define carDelay GREENTIME * 0.1  // How long are all traffic lights red, when changing from one side to another?
+
 bool currentlyNorthbound = false;  // Is the traffic currently northbound?
 
 
@@ -36,6 +37,8 @@ void setTrafficDir(bool northbound){
 
 int main(void)
 {
+	DDRB = 0xFF;
+	DDRD = 0b11111011;
 	// TODO: Implement (#5)
 }
 
