@@ -1,5 +1,5 @@
 # IDE Things
-*/.vs
+.vs/
 
 # Prerequisites
 *.d
