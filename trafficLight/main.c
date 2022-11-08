@@ -33,6 +33,22 @@ void setTrafficLight(bool northbound, bool toGreen){
 
 void setPedLight(bool northbound, bool toGreen){
 	// TODO: Implement (#3)
+  if (northbound){
+    if (toGreen){
+      PORTB |= trafficLights[1][3];
+    }
+    else{
+      PORTB &= ~trafficLights[1][3];
+    }
+  }
+  else{
+    if (toGreen){
+      PORTD |= trafficLights[0][3];
+    }
+    else{
+      PORTD &= ~trafficLights[0][3];
+    }
+  }
 }
 
 
@@ -46,11 +62,11 @@ int main(void)
 	DDRB = 0xFF;
 	DDRD = 0b11111011;
 	// TODO: Implement (#5)
-  while (1){
-    for (int i = 0; i<4; i++){
-      PORTD = trafficLights[0][i];
-      _delay_ms(500);
-    }
-  }
+	while (1){
+		setPedLight(false, true);
+		_delay_ms(500);
+		setPedLight(false, false);
+		_delay_ms(500);
+	}
 }
 
