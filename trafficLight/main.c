@@ -33,8 +33,9 @@ void setTrafficLight(bool northbound, bool toGreen){
     if (toGreen){
       PORTB |= trafficLights[1][1];  // Yellow on
       _delay_ms(GREENTIME * 0.05);
-      PORTB &= ~(trafficLights[1][0] & trafficLights[1][1]);  // Red + yellow off
-      PORTB = trafficLights[1][2];  // Green on
+      PORTB &= ~trafficLights[1][0];  // Red off
+      PORTB &= ~trafficLights[1][1];  // Yellow off
+      PORTB |= trafficLights[1][2];  // Green on
     }
     else{
       PORTB &= ~trafficLights[1][2];  // Green off
@@ -48,8 +49,9 @@ void setTrafficLight(bool northbound, bool toGreen){
     if (toGreen){
       PORTD |= trafficLights[0][1];  // Yellow on
       _delay_ms(GREENTIME * 0.05);
-      PORTD &= ~(trafficLights[0][2] & trafficLights[1][1]);  // Red + yellow off
-      PORTD = trafficLights[0][2];  // Green on
+      PORTD &= ~trafficLights[0][0];  // Red off
+      PORTD &= ~trafficLights[0][1]; // Yellow off
+      PORTD |= trafficLights[0][2];  // Green on
     }
     else{
       PORTD &= ~trafficLights[0][2];  // Green off
@@ -95,9 +97,12 @@ int main(void)
   DDRD = 0b11111011;
   // TODO: Implement (#5)
   while (1){
-    setTrafficLight(false, true);
+    setTrafficLight(true, true);
+    setPedLight(true, true);
     _delay_ms(GREENTIME);
-    setTrafficLight(false, false);
+    setPedLight(true, false);
+    _delay_ms(500);
+    setTrafficLight(true, false);
     _delay_ms(GREENTIME);
   }
 }
