@@ -32,7 +32,8 @@ void setTrafficLight(bool northbound, bool toGreen){
 
 
 void setPedLight(bool northbound, bool toGreen){
-	// TODO: Implement (#3)
+  // Sets the pedestrian light to green, if toGreen is true, and red if toGreen is false
+  // Uses the eastbound pedestrian light if northbound is false, and northbound if northbound is true
   if (northbound){
     if (toGreen){
       PORTB |= trafficLights[1][3];
@@ -63,9 +64,9 @@ int main(void)
 	DDRD = 0b11111011;
 	// TODO: Implement (#5)
 	while (1){
-		setPedLight(false, true);
+		setPedLight(true, true);
 		_delay_ms(500);
-		setPedLight(false, false);
+		setPedLight(true, false);
 		_delay_ms(500);
 	}
 }
