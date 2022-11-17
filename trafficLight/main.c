@@ -13,8 +13,8 @@
 #include <stdbool.h>  // Add boolean data type
 
 // Globals
-#define GREENTIME 10  // How many seconds can the light stay green?
-#define pedDelay 2  // How much earlier do the pedestrian lights turn off, than the car lights?
+#define GREENTIME 10 * 1000 // How many miliseconds can the light stay green?
+#define pedDelay 2 * 1000 // How much earlier do the pedestrian lights turn off, than the car lights?
 #define carDelay GREENTIME * 0.1  // How long are all traffic lights red, when changing from one side to another?
 
 bool currentlyNorthbound = false;  // Is the traffic currently northbound?
@@ -27,7 +27,39 @@ char trafficLights[2][4] = {
 
 
 void setTrafficLight(bool northbound, bool toGreen){
-	// TODO: Implement (#2)
+	// TODO: More testing
+  // Sets the normal traffic lights to green, if toGreen is true, and red if toGreen is false
+  // Uses the eastbound traffic lights if northbound is false, and northbound if northbound is true
+  if (northbound){
+    if (toGreen){
+      PORTB |= trafficLights[1][1];  // Yellow on
+      _delay_ms(GREENTIME * 0.05);
+      PORTB &= ~(trafficLights[1][2] & trafficLights[1][1]);  // Red + yellow off
+      PORTB = trafficLights[1][0];  // Green on
+    }
+    else{
+      PORTB &= ~trafficLights[1][0];  // Green off
+      PORTB |= trafficLights[1][1];  // Yellow on
+      _delay_ms(GREENTIME * 0.1);
+      PORTB &= ~trafficLights[1][1];  // Yellow off
+      PORTB |= trafficLights[1][0];  // Red on
+    }
+  }
+  else{
+    if (toGreen){
+      PORTD |= trafficLights[0][1];  // Yellow on
+      _delay_ms(GREENTIME * 0.05);
+      PORTD &= ~(trafficLights[0][2] & trafficLights[1][1]);  // Red + yellow off
+      PORTD = trafficLights[0][2];  // Green on
+    }
+    else{
+      PORTD &= ~trafficLights[0][2];  // Green off
+      PORTD |= trafficLights[0][1];  // Yellow on
+      _delay_ms(GREENTIME * 0.1);
+      PORTD &= ~trafficLights[0][1];  // Yellow off
+      PORTD |= trafficLights[0][0];  // Red on
+    }
+  }
 }
 
 
@@ -64,10 +96,10 @@ int main(void)
 	DDRD = 0b11111011;
 	// TODO: Implement (#5)
 	while (1){
-		setPedLight(true, true);
-		_delay_ms(500);
-		setPedLight(true, false);
-		_delay_ms(500);
+		setTrafficLight(false, true);
+		_delay_ms(GREENTIME);
+		setTrafficLight(false, false);
+		_delay_ms(GREENTIME);
 	}
 }
 
