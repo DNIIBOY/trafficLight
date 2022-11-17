@@ -105,16 +105,20 @@ int main(void)
 {
   DDRB = 0xFF;
   DDRD = 0b11111011;
+
   setTrafficLight(!currentlyNorthbound, false);
   setPedLight(!currentlyNorthbound, false);
   setTrafficLight(currentlyNorthbound, true);
   setPedLight(currentlyNorthbound, true);
-  // TODO: Implement button input (#5)
+
   while (1){
-    setTrafficDir(false);
-    _delay_ms(GREENTIME);
-    setTrafficDir(true);
-    _delay_ms(GREENTIME);
+    if (!(PIND & 0b00000100)){  // Check for incoming traffic
+      continue;
+    }
+    setTrafficDir(!currentlyNorthbound);  // Toggle lights
+    _delay_ms(GREENTIME);  // Wait
+    setTrafficDir(!currentlyNorthbound);  // Toggle lights back
+    _delay_ms(GREENTIME);  // Set a delay, so a lot of traffic doesn't block a direction
   }
 }
 
