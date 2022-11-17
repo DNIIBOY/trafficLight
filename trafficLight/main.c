@@ -87,7 +87,17 @@ void setPedLight(bool northbound, bool toGreen){
 
 
 void setTrafficDir(bool northbound){
-	// TODO: Implement (#4)
+  // Sets all traffic lights to go northbound if northbound is true, of eastbound if northbound is false
+  if (northbound == currentlyNorthbound){  // If direction is same as now, do nothing
+    return;
+  }
+  setPedLight(!northbound, false);  // Give crossing pedestrians red
+  _delay_ms(pedDelay);
+  setTrafficLight(!northbound, false);  // Give crossing cars red
+  _delay_ms(carDelay);
+  setTrafficLight(northbound, true);  // Give cars going this way green
+  setPedLight(northbound, true);  // Give pedestrians going this way green
+  currentlyNorthbound = northbound;  // Update currentlyNorthbound
 }
 
 
@@ -95,14 +105,15 @@ int main(void)
 {
   DDRB = 0xFF;
   DDRD = 0b11111011;
-  // TODO: Implement (#5)
+  setTrafficLight(!currentlyNorthbound, false);
+  setPedLight(!currentlyNorthbound, false);
+  setTrafficLight(currentlyNorthbound, true);
+  setPedLight(currentlyNorthbound, true);
+  // TODO: Implement button input (#5)
   while (1){
-    setTrafficLight(true, true);
-    setPedLight(true, true);
+    setTrafficDir(false);
     _delay_ms(GREENTIME);
-    setPedLight(true, false);
-    _delay_ms(500);
-    setTrafficLight(true, false);
+    setTrafficDir(true);
     _delay_ms(GREENTIME);
   }
 }
