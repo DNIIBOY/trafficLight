@@ -69,18 +69,18 @@ void setPedLight(bool northbound, bool toGreen){
   // Uses the eastbound pedestrian light if northbound is false, and northbound if northbound is true
   if (northbound){
     if (toGreen){
-      PORTB |= trafficLights[1][3];
+      PORTB |= trafficLights[1][3];  // Turn light green in northbound direction
     }
     else{
-      PORTB &= ~trafficLights[1][3];
+      PORTB &= ~trafficLights[1][3];  // Turn light red in northbound direction
     }
   }
   else{
     if (toGreen){
-      PORTD |= trafficLights[0][3];
+      PORTD |= trafficLights[0][3];  // Turn light green in eastbound direction
     }
     else{
-      PORTD &= ~trafficLights[0][3];
+      PORTD &= ~trafficLights[0][3];  // Turn light red in eastbound direction
     }
   }
 }
@@ -92,9 +92,9 @@ void setTrafficDir(bool northbound){
     return;
   }
   setPedLight(!northbound, false);  // Give crossing pedestrians red
-  _delay_ms(pedDelay);
+  _delay_ms(pedDelay);  // Wait
   setTrafficLight(!northbound, false);  // Give crossing cars red
-  _delay_ms(carDelay);
+  _delay_ms(carDelay);  // Wait
   setTrafficLight(northbound, true);  // Give cars going this way green
   setPedLight(northbound, true);  // Give pedestrians going this way green
   currentlyNorthbound = northbound;  // Update currentlyNorthbound
@@ -103,17 +103,17 @@ void setTrafficDir(bool northbound){
 
 int main(void)
 {
+  // Set the data direction registers of both port
   DDRB = 0xFF;
   DDRD = 0b11111011;
 
-  setTrafficLight(!currentlyNorthbound, false);
-  setPedLight(!currentlyNorthbound, false);
-  setTrafficLight(currentlyNorthbound, true);
-  setPedLight(currentlyNorthbound, true);
+  // Set the initial traffic direction
+  setTrafficDir(true);
+  setTrafficDir(false);
 
   while (1){
     if (!(PIND & 0b00000100)){  // Check for incoming traffic
-      continue;
+      continue;  // If there is no traffic, check again
     }
     setTrafficDir(!currentlyNorthbound);  // Toggle lights
     _delay_ms(GREENTIME);  // Wait
