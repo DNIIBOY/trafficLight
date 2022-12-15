@@ -87,7 +87,7 @@ void setPedLight(bool northbound, bool toGreen){
 
 
 void setTrafficDir(bool northbound){
-  // Sets all traffic lights to go northbound if northbound is true, of eastbound if northbound is false
+  // Sets all traffic lights to go northbound if northbound is true, or eastbound if northbound is false
   if (northbound == currentlyNorthbound){  // If direction is same as now, do nothing
     return;
   }
@@ -103,7 +103,7 @@ void setTrafficDir(bool northbound){
 
 int main(void)
 {
-  // Set the data direction registers of both port
+  // Set the data direction registers of both ports
   DDRB = 0xFF;
   DDRD = 0b11111011;
 
