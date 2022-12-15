@@ -21,8 +21,8 @@ bool currentlyNorthbound = false;  // Is the traffic currently northbound?
 
 char trafficLights[2][4] = {
   // Red, Yellow, Green, Pedestrian
-	{0b00001000, 0b00010000, 0b00100000, 0b01000000},  // Port D, E/W
-	{0b00000001, 0b00000010, 0b00000100, 0b00001000}  // Port B, N/S
+	{0b00100000, 0b00010000, 0b00001000, 0b01000000},  // Port D, E/W
+	{0b00000100, 0b00000010, 0b00000001, 0b00001000}  // Port B, N/S
 };
 
 
